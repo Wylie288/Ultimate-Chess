@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 435119c8f9b34ce4ea46950b76b8aae5
+timeCreated: 1490722239
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Footlight MT Light
+  fontNames:
+  - Footlight MT Light
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 1b98005db95299542b84ad75cb669a60, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
