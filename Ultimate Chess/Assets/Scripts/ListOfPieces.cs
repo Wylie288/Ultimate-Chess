@@ -10,12 +10,12 @@ public class ListOfPieces : MonoBehaviour
     public List<GameObject> list;
     BoardManager manager;
     GameObject[] delete;
-    GameObject m;
-    GameObject s;
+    GameObject finalizebtn;
+    AcceptButton finalizeScript;
     // Use this for initialization
     void Start () {
-        m = GameObject.FindGameObjectWithTag("Mainbtn");
-        s = GameObject.FindGameObjectWithTag("Save");
+        finalizebtn = GameObject.FindWithTag("Finalize");     
+        finalizeScript = finalizebtn.GetComponent<AcceptButton>();
         allPieces = new GameObject[60];
         delete = GameObject.FindGameObjectsWithTag("Button");
         manager = GameObject.FindGameObjectWithTag("Grid").GetComponent<BoardManager>();
@@ -36,7 +36,7 @@ public class ListOfPieces : MonoBehaviour
         //list = GameObject.FindWithTag("Grid").GetComponent<BoardManager>().objectList;
         //currentPieces = GameObject.FindGameObjectsWithTag("IndPiece");
     }
-    public void OnMouseDown()
+    public void SavePosition()//OnMouseDown()
     {
         PlayerPrefs.DeleteAll();
         allPieces = GameObject.FindGameObjectsWithTag("IndPiece");
@@ -59,14 +59,12 @@ public class ListOfPieces : MonoBehaviour
     }
     public void LoadPosition()
     {
+        finalizebtn.SetActive(true);
+        finalizeScript.mainmenubtn.SetActive(true);
+        finalizeScript.savebtn.SetActive(true);
+        finalizebtn.SetActive(false);
         Destroy(GameObject.FindWithTag("Selector"));
         Destroy(GameObject.FindWithTag("canvas"));
-        GameObject f = GameObject.FindGameObjectWithTag("Finalize");
-        f.SetActive(false);
-        
-        m.SetActive(true);
-        
-        s.SetActive(true);
         for(int i = 0; i < delete.Length; i++)
         {
             Destroy(delete[i]);
@@ -101,8 +99,6 @@ public class ListOfPieces : MonoBehaviour
                 instance.gameObject.GetComponent<Piece>().y = (int)y / 58;
                 manager.boardState[(int)x / 58, (int)y / 58, 0] = id;
                 manager.boardState[(int)x / 58, (int)y / 58, 1] = color;
-                
-
             }
         }
         Debug.Log(PlayerPrefs.GetInt("GameState"));

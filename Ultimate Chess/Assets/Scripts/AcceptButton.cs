@@ -9,13 +9,13 @@ public class AcceptButton : MonoBehaviour
     public GameObject[] piece;
     public GameObject[] text;
     public GameObject savebtn;
-    public GameObject finalizebtn;
     public GameObject mainmenubtn;
+    public Text turn;
 
     void Start()
     {
+        turn.text = "Place all white pieces";
         mainmenubtn = GameObject.FindWithTag("Mainbtn");
-        finalizebtn = GameObject.FindWithTag("Finalize");
         savebtn = GameObject.FindWithTag("Save");
         mainmenubtn.SetActive(false);
         savebtn.SetActive(false);
@@ -42,11 +42,9 @@ public class AcceptButton : MonoBehaviour
             }
             Destroy(GameObject.FindWithTag("Selector"));
             Destroy(GameObject.FindWithTag("canvas"));
-            finalizebtn.SetActive(false);
             savebtn.SetActive(true);
             mainmenubtn.SetActive(true);
-            
-
+            this.gameObject.SetActive(false);
         }
 
         //Player 1 build
@@ -56,6 +54,7 @@ public class AcceptButton : MonoBehaviour
         }
         else if (GameObject.FindWithTag("Grid").GetComponent<BoardManager>().gameState == 0 && GameObject.FindWithTag("Grid").GetComponent<BoardManager>().kingUsed == 1)
         {
+                turn.text = "Place all black pieces";
                 GameObject.FindWithTag("Grid").GetComponent<BoardManager>().pieceSelect = 1;
                 GameObject.FindWithTag("Grid").GetComponent<BoardManager>().color = 1;
                 GameObject.FindWithTag("Grid").GetComponent<BoardManager>().selectionX = 5;
