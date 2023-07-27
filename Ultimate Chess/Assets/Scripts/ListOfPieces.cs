@@ -62,9 +62,11 @@ public class ListOfPieces : MonoBehaviour
         finalizebtn.SetActive(true);
         finalizeScript.mainmenubtn.SetActive(true);
         finalizeScript.savebtn.SetActive(true);
+        finalizeScript.loadbtn.SetActive(true);
         finalizebtn.SetActive(false);
         Destroy(GameObject.FindWithTag("Selector"));
         Destroy(GameObject.FindWithTag("canvas"));
+        Destroy(GameObject.FindWithTag("placeArea"));
         for(int i = 0; i < delete.Length; i++)
         {
             Destroy(delete[i]);

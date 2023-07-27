@@ -9,16 +9,21 @@ public class AcceptButton : MonoBehaviour
     public GameObject[] piece;
     public GameObject[] text;
     public GameObject savebtn;
+    public GameObject loadbtn;
     public GameObject mainmenubtn;
+    GameObject placeArea;
     public Text turn;
 
     void Start()
     {
         turn.text = "Place all white pieces";
-        mainmenubtn = GameObject.FindWithTag("Mainbtn");
         savebtn = GameObject.FindWithTag("Save");
-        mainmenubtn.SetActive(false);
+        loadbtn = GameObject.FindWithTag("loadbtn");
+        mainmenubtn = GameObject.FindWithTag("Mainbtn");
+        placeArea = GameObject.FindWithTag("placeArea");
+        mainmenubtn.SetActive(true);
         savebtn.SetActive(false);
+        loadbtn.SetActive(false);
     }
     void OnMouseDown()
     {
@@ -42,7 +47,9 @@ public class AcceptButton : MonoBehaviour
             }
             Destroy(GameObject.FindWithTag("Selector"));
             Destroy(GameObject.FindWithTag("canvas"));
+            Destroy(GameObject.FindWithTag("placeArea"));
             savebtn.SetActive(true);
+            loadbtn.SetActive(true);
             mainmenubtn.SetActive(true);
             this.gameObject.SetActive(false);
         }
@@ -64,6 +71,7 @@ public class AcceptButton : MonoBehaviour
                 GameObject.FindWithTag("Grid").GetComponent<BoardManager>().threeUsed = 0;
                 GameObject.FindWithTag("Grid").GetComponent<BoardManager>().derp.text = " ";
                 GameObject.FindWithTag("Grid").GetComponent<BoardManager>().gameState = 1;
+                placeArea.GetComponent<placeAreaScript>().toBlack();
                 list = GameObject.FindGameObjectsWithTag("Button");
                 for (int i = 0; i < 9; i++)
                 {

@@ -16,6 +16,8 @@ TagManager:
   - Save
   - Finalize
   - Mainbtn
+  - loadbtn
+  - placeArea
   layers:
   - Default
   - TransparentFX
