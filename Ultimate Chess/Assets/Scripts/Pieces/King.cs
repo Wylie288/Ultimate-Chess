@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class King : Piece
+public class King : Piece 
 {
-    public void Start()
-    {
+    public void Start() 
+	{
 		gameObject.GetComponent<SpriteRenderer>().sprite = spriteList[color+(LoadLevel.styleSelect * 2)] as Sprite;
     }
 
-    new public void OnMouseDown()
-    {
-        base.OnMouseDown(); //Allows destroy
+    new public void OnMouseDown() 
+	{
+        base.OnMouseDown();
         base.DestroyMarkers();
 		Movement();
     }
 
-	public override void Movement()
+	public override void Movement() 
 	{
 		base.CreateMarker(0, 1, 2);
 		base.CreateMarker(0, -1, 2);

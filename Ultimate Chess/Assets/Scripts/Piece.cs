@@ -13,27 +13,23 @@ public class Piece : MonoBehaviour
 	public int value;
 	public int x;
 	public int y;
-
-	
+    public BoardManager boardManager;
+    public const int MOVE = 0;
+    public const int TAKE = 1;
+    public const int MOVETAKE = 2;
+    public const int KING = 1;
 
 	public void OnMouseDown()
 	{
-		if (GameObject.FindWithTag ("Grid").GetComponent<BoardManager> ().gameState < 2) 
-		{ //If build phase
-			GameObject.FindWithTag ("Grid").GetComponent<BoardManager> ().points += value; // Add points back to pool
-			GameObject.FindWithTag ("Grid").GetComponent<BoardManager> ().boardState [x, y, 0] = 0;
-
-            //takes away specials used
+        boardManager = GameObject.FindWithTag("Grid").GetComponent<BoardManager>();
+		if (boardManager.gameState < 2) //If build phase
+		{
+			boardManager.points += value; // Add points back to pool
+			boardManager.boardState[x, y, 0] = 0;
             if (value == 0)
-            {
-                GameObject.FindWithTag("Grid").GetComponent<BoardManager>().kingUsed -= 1; //allows king to be replaced
-            }
-            
+                boardManager.kingUsed -= 1; //allows king to be replaced
             if (value == 7 || value == 9)
-            {
-                GameObject.FindWithTag("Grid").GetComponent<BoardManager>().threeUsed -= 1;
-            }
-
+                boardManager.threeUsed -= 1;
 			Destroy (gameObject);
 		}
 	}
@@ -47,7 +43,24 @@ public class Piece : MonoBehaviour
 		}
 	}
 
-	public void CreateMarker (int rx, int ry, int type)
+    public void CreateMarker(int relativeX, int relativeY, int type) {
+        boardManager = GameObject.FindWithTag("Grid").GetComponent<BoardManager>();
+        Vector2Int position = new Vector2Int(x + relativeX, y + relativeY);
+		if (isInBounds(position)) {      
+            if (boardManager.getActivePlayer() == color) {                
+                if ((type == MOVE)      && (isEmpty(position)))
+                    InstantiateMarker(relativeX, relativeY, type);
+                if ((type == TAKE)     && (!isEmpty(position)) && (isOpponent(position)))
+                    InstantiateMarker(relativeX, relativeY, type);
+                if ((type == MOVETAKE) && ((isEmpty(position)) || (isOpponent(position))))
+                    InstantiateMarker(relativeX, relativeY, type);
+            }
+        else if ((type > MOVE) && (isOpponent(position)) && (boardManager.getPieceAt(position) == KING))
+            boardManager.check = true;
+		}
+	}
+
+	public void CreateMarkerOld (int rx, int ry, int type)
 	{
 		if ((x + rx >= 0) && (x + rx <= 9) && (y + ry >= 0) && (y + ry <= 9)) //If not out of bounds
 		{
@@ -100,6 +113,27 @@ public class Piece : MonoBehaviour
 	public virtual void Movement ()
 	{
 	}
+
+    bool isInBounds(Vector2Int position)
+    {
+        if ((position.x >= 0) && (position.x <= 9) && (position.y >= 0) && (position.y <= 9))
+            return true;
+        return false;
+    }
+
+    bool isEmpty(Vector2Int position)
+    {
+        if (boardManager.getPieceAt(position) == 0)
+            return true;  
+        return false;
+    }
+
+    bool isOpponent(Vector2Int position)
+    {
+        if (boardManager.getColorAt(position) != color)
+            return true;
+        return false;
+    }
 }
 
 /* Piece ID:

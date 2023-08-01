@@ -62,9 +62,9 @@ public class BoardManager : MonoBehaviour
         checkdisplay.text = " ";
 
         if (winVar == 1 )
-            win.text = "A Winner is You";
+            win.text = "White Wins!";
         else if (winVar == 2)
-        win.text = "Your'e Winner";
+        win.text = "Black Wins";
 
         if (gameState == 2)
             turn.text = "It's White's Turn";
@@ -246,5 +246,19 @@ public class BoardManager : MonoBehaviour
         }
         else
             return false;
+    }
+
+    public int getActivePlayer()
+    {
+        return gameState - 2;
+    }
+
+    public int getPieceAt(Vector2Int position)
+    {
+        return boardState[position.x, position.y, 0];
+    }
+    public int getColorAt(Vector2Int position)
+    {
+        return boardState[position.x, position.y, 1];
     }
 }
